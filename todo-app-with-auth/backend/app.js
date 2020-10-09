@@ -10,6 +10,10 @@ const todos = [
   { id: 4, name: "Learn React" },
 ];
 
+app.get("/", (req, res) => {
+  res.send("Hello World...");
+});
+
 app.get("/api/todos", (req, res) => {
   res.send(todos);
 });
