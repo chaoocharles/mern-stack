@@ -46,7 +46,18 @@ async function addTodo() {
   console.log(savedTodo)
 }
 
-addTodo()
+// addTodo()
+
+async function getTodos(){
+ const todos = await Todo
+ .find({isComplete: false})
+ .limit(5)
+ .sort({name: 1})
+ .select({name: 1, isComplete: 1})
+ console.log(todos)
+}
+
+getTodos()
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
