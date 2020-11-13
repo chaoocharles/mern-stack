@@ -27,7 +27,7 @@ mongoose.connection.once('open', () => {
 })
 
 const todoSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, required: true, minlength: 3 },
   author: String,
   isComplete: Boolean,
   date: { type: Date, default: Date.now },
@@ -37,13 +37,20 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 async function addTodo() {
   const todo = new Todo({
-    name: 'create node apis',
+    name: null,
     author: 'Chaoo',
     isComplete: false,
   })
   
-  const savedTodo = await todo.save();
-  console.log(savedTodo)
+  try{
+    const savedTodo = await todo.save();
+    console.log(savedTodo)
+  }
+  catch(e){
+    // for (field in e.errors)
+    // console.log(e.errors[field].message)
+    console.log(e.message)
+  }
 }
 
 // addTodo()
@@ -52,12 +59,30 @@ async function getTodos(){
  const todos = await Todo
  .find({isComplete: false})
  .limit(5)
- .sort({name: 1})
- .select({name: 1, isComplete: 1})
+ .sort({date: -1})
+ .select({name: 1, isComplete: 1, date: 1})
  console.log(todos)
 }
 
-getTodos()
+async function updateTodo(id) {
+  const todo = await Todo.findById(id);
+
+  if (!todo) return;
+  todo.set({
+    name: "Learn React"
+  })
+
+  const updatedTodo = await todo.save();
+  console.log(updatedTodo)
+}
+
+async function deleteTodo(id) {
+  // const todo = await Todo.deleteOne({ _id: id });
+  const todo = await Todo.findByIdAndDelete(id);
+  console.log(todo)
+}
+
+// deleteTodo("5fad0df385410022fc7c5fa5")
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
