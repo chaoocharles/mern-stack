@@ -1,65 +1,87 @@
+const mongoose = require("mongoose")
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-const todos = [
-  { id: 2, name: "Learn Js" },
-  { id: 3, name: "Learn Node" },
-  { id: 4, name: "Learn React" },
-];
+const todoSchema = new mongoose.Schema({
+  name: { type: String, required: true, minlength: 3 },
+  author: String,
+  isComplete: Boolean,
+  date: { type: Date, default: Date.now },
+})
 
-router.get("/", (req, res) => {
+const Todo = mongoose.model('Todo', todoSchema);
+
+router.get("/", async(req, res) => {
+  const todos = await Todo
+  .find()
+  .sort({date: -1})
+
   res.send(todos);
 });
 
-router.get("/:id", (req, res) => {
-  const todo = todos.find((todo) => todo.id === parseInt(req.params.id));
+router.get("/:id", async (req, res) => {
+  const todo = await Todo.findById(req.params.id);
 
   if (!todo) return res.status(404).send("Todo not found...");
+  
   res.send(todo);
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
+    author: String,
+    isComplete: Boolean,
+    date: Date
   });
 
-  const result = schema.validate(req.body);
+  const { error } = schema.validate(req.body);
 
-  if (result.error)
-    return res.status(400).send(result.error.details[0].message);
+  if (error)
+    return res.status(400).send(error.details[0].message);
 
-  const todo = {
-    id: todos.length + 2,
+  let todo = new Todo ({
     name: req.body.name,
-  };
-  todos.push(todo);
-  res.send(todo);
-});
-
-router.put("/:id", (req, res) => {
-  const todo = todos.find((todo) => todo.id === parseInt(req.params.id));
-  if (!todo) return res.status(404).send("Todo not found...");
-
-  const schema = Joi.object({
-    name: Joi.string().min(3).required(),
+    author: req.body.author,
+    isComplete: req.body.isComplete,
+    date: req.body.date
   });
 
-  const result = schema.validate(req.body);
-
-  if (result.error)
-    return res.status(400).send(result.error.details[0].message);
-
-  todo.name = req.body.name;
+  todo = await todo.save();
   res.send(todo);
 });
 
-router.delete("/:id", (req, res) => {
-  const todo = todos.find((todo) => todo.id === parseInt(req.params.id));
+router.put("/:id", async (req, res) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+    author: String,
+    isComplete: Boolean,
+    date: Date,
+  });
+
+  const { error} = schema.validate(req.body);
+
+  if (error)
+    return res.status(400).send(result.error.details[0].message);
+
+  const todo = await Todo.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    author: req.body.author,
+    isComplete: req.body.isComplete,
+    date: req.body.date
+  }, {
+    new: true
+  });
+
   if (!todo) return res.status(404).send("Todo not found...");
 
-  const index = todos.indexOf(todo);
-  todos.splice(index, 1);
+  res.send(todo);
+});
+
+router.delete("/:id", async(req, res) => {
+  const todo = await Todo.findByIdAndDelete(req.params.id)
+  if (!todo) return res.status(404).send("Todo not found...");
 
   res.send(todo);
 });
