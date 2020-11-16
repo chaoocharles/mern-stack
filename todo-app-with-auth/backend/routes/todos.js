@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const todoSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3 },
+  name: { type: String, required: true, minlength: 3, maxlength: 200 },
   author: String,
   isComplete: Boolean,
   date: { type: Date, default: Date.now },
@@ -30,10 +30,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const schema = Joi.object({
-    name: Joi.string().min(3).required(),
-    author: String,
-    isComplete: Boolean,
-    date: Date
+    name: Joi.string().min(3).max(200).required(),
+    author: Joi.string().min(3),
+    isComplete: Joi.boolean(),
+    date: Joi.date(),
   });
 
   const { error } = schema.validate(req.body);
@@ -55,9 +55,9 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
-    author: String,
-    isComplete: Boolean,
-    date: Date,
+    author: Joi.string().min(3),
+    isComplete: Joi.boolean(),
+    date: Joi.date(),
   });
 
   const { error} = schema.validate(req.body);
