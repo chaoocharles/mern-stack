@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt")
 const mongoose = require("mongoose")
 const Joi = require("joi");
 const express = require("express");
@@ -15,7 +16,7 @@ router.post("/", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().min(3).max(200).required().email(),
-    password: Joi.string().min(3).max(200).required(),
+    password: Joi.string().min(6).max(200).required(),
   });
 
   const { error } = schema.validate(req.body);
@@ -32,8 +33,14 @@ router.post("/", async (req, res) => {
     password: req.body.password,
   });
 
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt)
+
   await user.save();
-  res.send(user);
+  res.send({
+      name: user.name,
+      email: user.email
+  }); 
 }); 
 
 module.exports = router;
