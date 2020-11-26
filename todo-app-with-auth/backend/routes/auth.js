@@ -1,11 +1,8 @@
-const jwt = require ("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const { User } = require("../models/user")
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
-
-require('dotenv').config();
 
 router.post("/", async (req, res) => {
     const schema = Joi.object({
@@ -24,10 +21,11 @@ router.post("/", async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password)
     if (!validPassword) return res.status(400).send("Invalid email or password...")
     
-    const jwtPrivateKey = process.env.TODO_APP_JWT_PRIVATE_KEY;
-    const jwtToken = jwt.sign({ _id: user._id }, jwtPrivateKey)
+    // const jwtPrivateKey = process.env.TODO_APP_JWT_PRIVATE_KEY;
+    // const token = jwt.sign({ _id: user._id }, jwtPrivateKey)
+    const token = user.generateAuthToken();
 
-    res.send(jwtToken)
+    res.send(token)
   });
   
   module.exports = router;
