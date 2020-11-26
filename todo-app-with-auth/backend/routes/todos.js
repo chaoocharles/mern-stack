@@ -1,16 +1,7 @@
-const mongoose = require("mongoose")
+const { Todo } = require("../models/todo")
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
-
-const todoSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3, maxlength: 200 },
-  author: String,
-  isComplete: Boolean,
-  date: { type: Date, default: Date.now },
-})
-
-const Todo = mongoose.model('Todo', todoSchema);
 
 router.get("/", async(req, res) => {
   const todos = await Todo

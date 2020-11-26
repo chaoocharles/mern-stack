@@ -1,16 +1,8 @@
-const bcrypt = require("bcrypt")
-const mongoose = require("mongoose")
+const bcrypt = require("bcrypt");
+const { User } = require("../models/user");
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
-
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3, maxlength: 30 },
-  email: { type: String, required: true, minlength: 3, maxlength: 200, unique: true },
-  password: { type: String, required: true, minlength: 3, maxlength: 1024, unique: true },
-})
-
-const User = mongoose.model('User', userSchema);
 
 router.post("/", async (req, res) => {
   const schema = Joi.object({
