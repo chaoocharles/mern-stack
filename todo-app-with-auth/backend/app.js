@@ -8,7 +8,15 @@ const auth = require("./routes/auth")
 const express = require("express");
 const mongoose = require("mongoose")
 
-winston.add(winston.transports.File, { filename: 'logfile.log'})
+winston.exceptions.handle(
+  new winston.transports.File({ filename: 'uncaughtExceptions.log' })
+)
+
+process.on('unhandledRejection', (ex) => {
+  throw ex;
+})
+
+winston.add(new winston.transports.File({ filename: 'logfile.log' }));
 
 require('dotenv').config();
 
