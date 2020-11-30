@@ -1,3 +1,4 @@
+const winston = require('winston');
 const error = require('./middleware/error');
 const config = require("config");
 const cors = require('cors');
@@ -6,6 +7,8 @@ const users = require("./routes/users");
 const auth = require("./routes/auth")
 const express = require("express");
 const mongoose = require("mongoose")
+
+winston.add(winston.transports.File, { filename: 'logfile.log'})
 
 require('dotenv').config();
 
