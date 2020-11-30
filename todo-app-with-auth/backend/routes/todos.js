@@ -4,12 +4,17 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", auth, async(req, res) => {
-  const todos = await Todo
-  .find()
-  .sort({date: -1})
-
-  res.send(todos);
+router.get("/", auth, async(req, res, next) => {
+  try{
+    const todos = await Todo
+    .find()
+    .sort({date: -1})
+  
+    res.send(todos);
+  }
+  catch (ex) {
+    next(ex);
+  }
 });
 
 router.get("/:id", auth, async (req, res) => {

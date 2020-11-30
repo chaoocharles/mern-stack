@@ -1,3 +1,4 @@
+const error = require('./middleware/error');
 const config = require("config");
 const cors = require('cors');
 const todos = require("./routes/todos");
@@ -20,6 +21,8 @@ app.use(cors())
 app.use("/api/todos", todos);
 app.use("/api/users", users);
 app.use("/api/auth", auth)
+
+app.use(error)
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
