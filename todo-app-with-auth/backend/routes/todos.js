@@ -1,3 +1,4 @@
+const winston = require('winston');
 const auth = require('../middleware/auth');
 const { Todo } = require("../models/todo")
 const Joi = require("joi");
@@ -12,8 +13,10 @@ router.get("/", auth, async(req, res, next) => {
   
     res.send(todos);
   }
-  catch (ex) {
-    next(ex);
+  catch (error) {
+    res.status(500).send("Error: " + error.message)
+
+    winston.error(error.message);
   }
 });
 
