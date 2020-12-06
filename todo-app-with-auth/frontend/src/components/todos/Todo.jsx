@@ -2,7 +2,7 @@ import React from 'react';
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, ButtonGroup, Button } from '@material-ui/core';
-import { Create, Delete, CheckCircle, MoreHoriz } from '@material-ui/icons';
+import { Create, Delete, CheckCircle, ArrowDropDown } from '@material-ui/icons';
 
 const useStyles = makeStyles({
     todoStyle: {
@@ -42,7 +42,7 @@ const Todo = () => {
                         <Delete color="secondary"/>
                     </Button>
                     <Button>
-                        <MoreHoriz />
+                        <ArrowDropDown />
                     </Button>
                 </ButtonGroup>
                 </div>
