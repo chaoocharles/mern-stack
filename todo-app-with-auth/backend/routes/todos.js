@@ -5,7 +5,7 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", auth, async(req, res, next) => {
+router.get("/", async(req, res, next) => {
   try{
     const todos = await Todo
     .find()

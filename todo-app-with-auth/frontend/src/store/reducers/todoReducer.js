@@ -3,10 +3,13 @@ const initState = {};
 const todoReducer = (state = initState, action) => {
 
     switch (action.type) {
-        case "ADD_TODO":
-            return state;
         case "GET_TODOS":
-            return state;
+            return action.todos;
+        case "GET_TODOS_ERROR":
+            return {
+                ...state,
+                getTodosError: action.error
+            };
         default:
           return state;
       }

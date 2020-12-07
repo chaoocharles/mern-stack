@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Todo from './Todo'
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from '@material-ui/core';
+
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import{ getTodos } from '../../store/actions/todoActions'
 
 const useStyles = makeStyles({
     todosStyle: {
@@ -16,7 +20,15 @@ const useStyles = makeStyles({
 
 const Todos = () => {
 
+    const todos = useSelector((state) => state.todos)
     const classes = useStyles();
+    const dispatch = useDispatch()
+
+    console.log(todos, "hello")
+
+    useEffect(() => {
+        dispatch(getTodos())
+    }, [dispatch])
 
     return ( 
         <>
