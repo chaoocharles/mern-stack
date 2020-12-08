@@ -1,17 +1,12 @@
-const initState = {};
-
-const todoReducer = (state = initState, action) => {
+const todoReducer = (todos = [], action) => {
 
     switch (action.type) {
         case "GET_TODOS":
-            return action.todos;
-        case "GET_TODOS_ERROR":
-            return {
-                ...state,
-                getTodosError: action.error
-            };
+            return action.todos.data;
+        case "ADD_TODO":
+            return [action.todo.data, ...todos];
         default:
-          return state;
+          return todos;
       }
 }
 

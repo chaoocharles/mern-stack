@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Todo = () => {
+const Todo = ( { todo } ) => {
 
     const classes = useStyles();
 
@@ -26,7 +26,7 @@ const Todo = () => {
         <>
             <div className = {classes.todoStyle}> 
                 <div>
-                    <Typography variant = "subtitle1">My Todo</Typography>
+                    <Typography variant = "subtitle1">{ todo.name }</Typography>
                     <Typography variant = "body2" className = {classes.moreStyle}>Author</Typography>
                     <Typography variant = "body2" className = {classes.moreStyle}>Date</Typography>
                 </div>

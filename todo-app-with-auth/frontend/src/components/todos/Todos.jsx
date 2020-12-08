@@ -24,7 +24,7 @@ const Todos = () => {
     const classes = useStyles();
     const dispatch = useDispatch()
 
-    console.log(todos, "hello")
+    console.log(todos, "todos")
 
     useEffect(() => {
         dispatch(getTodos())
@@ -34,8 +34,9 @@ const Todos = () => {
         <>
         <div className = {classes.todosStyle}>
             <Typography variant = "h5">yourTodos;</Typography>
-            <Todo/>
-            <Todo/>
+            { todos && todos.map( todo => {
+               return <Todo todo = { todo } key = { todo._id } />
+            })}
         </div>
         </>
      );

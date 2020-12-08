@@ -10,10 +10,22 @@ export const getTodos = () => {
             })
         })
         .catch((error) => {
+            console.log(error)
+        })
+    }
+}
+
+export const addTodo = (todo) => {
+    return(dispatch) => {
+        instance.post('/todos', todo)
+        .then((todo) => {
             dispatch({
-                type: "GET_TODOS_ERROR",
-                error
+                type: "ADD_TODO",
+                todo
             })
+        })
+        .catch((error) => {
+            console.log(error)
         })
     }
 }
