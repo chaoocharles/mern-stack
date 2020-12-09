@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core';
 
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import{ getTodos } from '../../store/actions/todoActions'
+import { getTodos } from '../../store/actions/todoActions'
 
 const useStyles = makeStyles({
     todosStyle: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Todos = () => {
+const Todos = ({ setTodo }) => {
 
     const todos = useSelector((state) => state.todos)
     const classes = useStyles();
@@ -33,9 +33,9 @@ const Todos = () => {
     return ( 
         <>
         <div className = {classes.todosStyle}>
-            <Typography variant = "h5">yourTodos;</Typography>
+    <Typography variant = "h5"> { todos.length > 0 ? "yourTodos;" : "noTodosYet;" } </Typography>
             { todos && todos.map( todo => {
-               return <Todo todo = { todo } key = { todo._id } />
+               return <Todo todo = { todo } key = { todo._id } setTodo = { setTodo } todos = { todos }/>
             })}
         </div>
         </>

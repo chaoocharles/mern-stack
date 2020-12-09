@@ -3,6 +3,7 @@ import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, ButtonGroup, Button } from '@material-ui/core';
 import { Create, Delete, CheckCircle, ArrowDropDown } from '@material-ui/icons';
+import moment from 'moment';
 
 const useStyles = makeStyles({
     todoStyle: {
@@ -18,9 +19,14 @@ const useStyles = makeStyles({
     }
 });
 
-const Todo = ( { todo } ) => {
+const Todo = ( { todo, setTodo, todos } ) => {
 
     const classes = useStyles();
+
+    const handleOnUpdateClick = (id) => {
+        const foundTodo = todos.find((todo) => todo._id === id);
+        setTodo({...foundTodo})
+    }
 
     return ( 
         <>
@@ -28,14 +34,16 @@ const Todo = ( { todo } ) => {
                 <div>
                     <Typography variant = "subtitle1">{ todo.name }</Typography>
                     <Typography variant = "body2" className = {classes.moreStyle}>Author</Typography>
-                    <Typography variant = "body2" className = {classes.moreStyle}>Date</Typography>
+                    <Typography variant = "body2" className = {classes.moreStyle}>Added: { moment(todo.date).fromNow() }</Typography>
                 </div>
                 <div>
                 <ButtonGroup size="small" aria-label="outlined primary button group">
                     <Button>
                         <CheckCircle/>
                     </Button>
-                    <Button>
+                    <Button 
+                    onClick = {() => handleOnUpdateClick(todo._id)}
+                    >
                         <Create color="primary"/>
                     </Button>
                     <Button>

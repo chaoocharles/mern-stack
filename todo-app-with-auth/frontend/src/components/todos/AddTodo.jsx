@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,20 +21,19 @@ const useStyles = makeStyles({
     }
   });
 
-const AddTodo = () => {
+const AddTodo = ({ todo, setTodo }) => {
     const classes = useStyles();
-    const [todo, setTodo] = useState({
-        name: '',
-        isComplete: false
-    })
-
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(addTodo(todo))
-        setTodo({...todo, name: ''})
+        if(todo._id){
+            console.log("updating todo...")
+        } else{
+            dispatch(addTodo(todo));
+        }
+        setTodo({...todo, name: ''});
     }
 
     return ( 

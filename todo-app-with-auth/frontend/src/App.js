@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
 import AddTodo from "./components/todos/AddTodo";
@@ -14,8 +14,11 @@ const useStyles = makeStyles({
 });
 
 function App() {
-
   const classes = useStyles();
+  const [todo, setTodo] = useState({
+    name: '',
+    isComplete: false
+})
 
   return (
     <>
@@ -24,8 +27,8 @@ function App() {
           <Typography variant = "h3" align = "center">toDoApp;</Typography>
         </AppBar>
         <Container className={classes.contentStyle} maxWidth = "sm">
-          <AddTodo/>
-          <Todos/>
+          <AddTodo todo = { todo } setTodo = { setTodo }/>
+          <Todos setTodo = { setTodo }/>
         </Container>
       </Container>
     </>
