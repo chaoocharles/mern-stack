@@ -33,7 +33,7 @@ const AddTodo = ({ todo, setTodo }) => {
         } else{
             dispatch(addTodo(todo));
         }
-        setTodo({...todo, name: ''});
+        setTodo({ name: '', isComplete: false});
     }
 
     return ( 
@@ -45,7 +45,7 @@ const AddTodo = ({ todo, setTodo }) => {
                     variant="outlined"
                     fullWidth
                     value = {todo.name}
-                    onChange = {(e) => setTodo({...todo, name: e.target.value})}
+                    onChange = {(e) => setTodo({...todo, name: e.target.value, date: new Date()})}
                 />
                 <Button variant="contained" color="primary" className = {classes.submitButton} type="submit">
                     <Send/>
