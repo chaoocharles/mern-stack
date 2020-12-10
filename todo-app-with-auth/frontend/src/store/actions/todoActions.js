@@ -59,3 +59,18 @@ export const deleteTodo = (id) => {
         })
     }
 }
+
+export const checkTodo = (id) => {
+    return(dispatch) => {
+        instance.patch(`/todos/${id}`)
+        .then((todo) => {
+            dispatch({
+                type: "CHECK_TODO",
+                todo
+            })
+        })
+        .catch((error) => { 
+            console.log(error)
+        })
+    }
+}

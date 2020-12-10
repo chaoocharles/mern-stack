@@ -6,7 +6,7 @@ import { Typography, ButtonGroup, Button } from '@material-ui/core';
 import { Create, Delete, CheckCircle, ArrowDropDown } from '@material-ui/icons';
 import moment from 'moment';
 
-import { deleteTodo } from '../../store/actions/todoActions';
+import { deleteTodo, checkTodo } from '../../store/actions/todoActions';
 
 const useStyles = makeStyles({
     todoStyle: {
@@ -19,8 +19,21 @@ const useStyles = makeStyles({
     },
     moreStyle: {
         color: "#8f8f8f"
+    },
+    isComplete: {
+        color: "green"
     }
 });
+
+const TodoStatus = ({ isComplete }) => {
+    const classes = useStyles();
+
+    if(isComplete === true){
+        return <CheckCircle className = { classes.isComplete }/>
+    } else {
+        return <CheckCircle color = "action"/>
+    }
+}
 
 const Todo = ( { todo, setTodo, todos } ) => {
 
@@ -36,6 +49,10 @@ const Todo = ( { todo, setTodo, todos } ) => {
         dispatch(deleteTodo(id))
     }
 
+    const handleCheck = (id) => {
+        dispatch(checkTodo(id))
+    }
+
     return ( 
         <>
             <div className = {classes.todoStyle}> 
@@ -46,8 +63,10 @@ const Todo = ( { todo, setTodo, todos } ) => {
                 </div>
                 <div>
                 <ButtonGroup size="small" aria-label="outlined primary button group">
-                    <Button>
-                        <CheckCircle/>
+                    <Button
+                     onClick = {() => handleCheck(todo._id)}
+                    >
+                        <TodoStatus isComplete = { todo.isComplete }/>
                     </Button>
                     <Button 
                     onClick = {() => handleOnUpdateClick(todo._id)}
