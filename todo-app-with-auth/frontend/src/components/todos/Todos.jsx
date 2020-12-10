@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     },
 });
 
-const Todos = ({ setTodo }) => {
+const Todos = ({ todo, setTodo }) => {
 
     const todos = useSelector((state) => state.todos)
     const classes = useStyles();
@@ -26,7 +26,7 @@ const Todos = ({ setTodo }) => {
 
     useEffect(() => {
         dispatch(getTodos())
-    }, [dispatch])
+    }, [todo._id, dispatch])
 
     return ( 
         <>

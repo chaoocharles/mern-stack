@@ -15,9 +15,9 @@ export const getTodos = () => {
     }
 }
 
-export const addTodo = (todo) => {
+export const addTodo = (newTodo) => {
     return(dispatch) => {
-        instance.post('/todos', todo)
+        instance.post('/todos', newTodo)
         .then((todo) => {
             dispatch({
                 type: "ADD_TODO",
@@ -30,16 +30,14 @@ export const addTodo = (todo) => {
     }
 }
 
-export const updateTodo = (newTodo, id) => {
+export const updateTodo = (updatedTodo, id) => {
     return(dispatch) => {
-        instance.put(`/todos/${id}`, newTodo)
+        instance.put(`/todos/${id}`, updatedTodo)
         .then((todo) => {
             dispatch({
                 type: "UPDATE_TODO",
                 todo
             })
-
-            console.log(todo, "heey")
         })
         .catch((error) => { 
             console.log(error)

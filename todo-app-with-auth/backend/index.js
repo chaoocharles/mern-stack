@@ -35,6 +35,6 @@ app.listen(port, () => {
   console.log(`Server running on port: ${port}...`);
 });
 
-mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(() => console.log("MongoDB connection established..."))
 .catch(error => console.error("MongoDB connection failed:", error.message))

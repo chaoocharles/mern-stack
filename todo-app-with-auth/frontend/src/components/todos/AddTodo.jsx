@@ -31,16 +31,18 @@ const AddTodo = ({ todo, setTodo }) => {
         if(todo._id){
             console.log(todo, "updating todo...")
             const id = todo._id;
-            const newTodo = {
+            const updatedTodo = {
                 name: todo.name,
-                isComplete: todo.isComplete,
+                isComplete: todo.isComplete,    
                 date: todo.date
             }
-
-            dispatch(updateTodo(newTodo, id));
-
+            dispatch(updateTodo(updatedTodo, id));
         } else{
-            dispatch(addTodo(todo));
+            const newTodo = {
+                ...todo,
+                date: new Date()
+            }
+            dispatch(addTodo(newTodo));
         }
         setTodo({ name: '', isComplete: false});
     }
@@ -54,7 +56,7 @@ const AddTodo = ({ todo, setTodo }) => {
                     variant="outlined"
                     fullWidth
                     value = {todo.name}
-                    onChange = {(e) => setTodo({...todo, name: e.target.value, date: new Date()})}
+                    onChange = {(e) => setTodo({...todo, name: e.target.value})}
                 />
                 <Button variant="contained" color="primary" className = {classes.submitButton} type="submit">
                     <Send/>

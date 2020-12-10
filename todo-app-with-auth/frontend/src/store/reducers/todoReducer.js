@@ -6,8 +6,7 @@ const todoReducer = (todos = [], action) => {
         case "ADD_TODO":
             return [action.todo.data, ...todos];
         case "UPDATE_TODO":
-            const filteredTodos = todos.filter((todo) => todo._id !== action.todo.data._id);
-            return [action.todo.data, ...filteredTodos];
+            return todos.map((todo) => todo._id === action.todo.data._id ? action.todo.data : todo);
         default:
           return todos;
       }
