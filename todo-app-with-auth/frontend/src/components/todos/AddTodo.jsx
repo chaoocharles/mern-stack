@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { TextField, Button } from '@material-ui/core';
 import { Send } from '@material-ui/icons';
 
-import { addTodo } from '../../store/actions/todoActions';
+import { addTodo, updateTodo } from '../../store/actions/todoActions';
 
 const useStyles = makeStyles({
     formStyle: {
@@ -29,7 +29,16 @@ const AddTodo = ({ todo, setTodo }) => {
         e.preventDefault();
 
         if(todo._id){
-            console.log("updating todo...")
+            console.log(todo, "updating todo...")
+            const id = todo._id;
+            const newTodo = {
+                name: todo.name,
+                isComplete: todo.isComplete,
+                date: todo.date
+            }
+
+            dispatch(updateTodo(newTodo, id));
+
         } else{
             dispatch(addTodo(todo));
         }

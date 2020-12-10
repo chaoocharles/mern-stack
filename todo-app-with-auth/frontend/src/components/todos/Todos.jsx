@@ -24,8 +24,6 @@ const Todos = ({ setTodo }) => {
     const classes = useStyles();
     const dispatch = useDispatch()
 
-    console.log(todos, "todos")
-
     useEffect(() => {
         dispatch(getTodos())
     }, [dispatch])

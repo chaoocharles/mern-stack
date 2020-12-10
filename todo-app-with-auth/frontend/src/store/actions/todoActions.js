@@ -29,3 +29,20 @@ export const addTodo = (todo) => {
         })
     }
 }
+
+export const updateTodo = (newTodo, id) => {
+    return(dispatch) => {
+        instance.put(`/todos/${id}`, newTodo)
+        .then((todo) => {
+            dispatch({
+                type: "UPDATE_TODO",
+                todo
+            })
+
+            console.log(todo, "heey")
+        })
+        .catch((error) => { 
+            console.log(error)
+        })
+    }
+}

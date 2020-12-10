@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
   res.send(todo);
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     author: Joi.string().min(3),

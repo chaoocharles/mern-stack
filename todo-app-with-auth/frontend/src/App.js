@@ -28,7 +28,7 @@ function App() {
         </AppBar>
         <Container className={classes.contentStyle} maxWidth = "sm">
           <AddTodo todo = { todo } setTodo = { setTodo }/>
-          <Todos setTodo = { setTodo }/>
+          <Todos todo = { todo } setTodo = { setTodo }/>
         </Container>
       </Container>
     </>
