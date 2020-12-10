@@ -79,7 +79,7 @@ router.put("/:id", async (req, res) => {
   res.send(todo);
 });
 
-router.delete("/:id", auth, async(req, res) => {
+router.delete("/:id", async(req, res) => {
   const todo = await Todo.findByIdAndDelete(req.params.id)
   if (!todo) return res.status(404).send("Todo not found...");
 

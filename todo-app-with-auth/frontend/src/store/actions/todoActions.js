@@ -44,3 +44,18 @@ export const updateTodo = (updatedTodo, id) => {
         })
     }
 }
+
+export const deleteTodo = (id) => {
+    return(dispatch) => {
+        instance.delete(`/todos/${id}`)
+        .then(() => {
+            dispatch({
+                type: "DELETE_TODO",
+                id
+            })
+        })
+        .catch((error) => { 
+            console.log(error)
+        })
+    }
+}

@@ -1,9 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, ButtonGroup, Button } from '@material-ui/core';
 import { Create, Delete, CheckCircle, ArrowDropDown } from '@material-ui/icons';
 import moment from 'moment';
+
+import { deleteTodo } from '../../store/actions/todoActions';
 
 const useStyles = makeStyles({
     todoStyle: {
@@ -22,10 +25,15 @@ const useStyles = makeStyles({
 const Todo = ( { todo, setTodo, todos } ) => {
 
     const classes = useStyles();
+    const dispatch = useDispatch()
 
     const handleOnUpdateClick = (id) => {
         const foundTodo = todos.find((todo) => todo._id === id);
         setTodo({...foundTodo})
+    }
+    
+    const handleDelete = (id) => {
+        dispatch(deleteTodo(id))
     }
 
     return ( 
@@ -46,7 +54,9 @@ const Todo = ( { todo, setTodo, todos } ) => {
                     >
                         <Create color="primary"/>
                     </Button>
-                    <Button>
+                    <Button
+                    onClick = {() => handleDelete(todo._id)}
+                    > 
                         <Delete color="secondary"/>
                     </Button>
                     <Button>
