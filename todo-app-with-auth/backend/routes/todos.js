@@ -20,15 +20,7 @@ router.get("/", async(req, res, next) => {
   }
 });
 
-router.get("/:id", auth, async (req, res) => {
-  const todo = await Todo.findById(req.params.id);
-
-  if (!todo) return res.status(404).send("Todo not found...");
-  
-  res.send(todo);
-});
-
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(200).required(),
     author: Joi.string().min(3),

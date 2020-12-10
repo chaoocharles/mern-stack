@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, ButtonGroup, Button } from '@material-ui/core';
-import { Create, Delete, CheckCircle, ArrowDropDown } from '@material-ui/icons';
+import { Create, Delete, CheckCircle } from '@material-ui/icons';
 import moment from 'moment';
 
 import { deleteTodo, checkTodo } from '../../store/actions/todoActions';
@@ -22,18 +22,11 @@ const useStyles = makeStyles({
     },
     isComplete: {
         color: "green"
+    },
+    checked: {
+        textDecoration: "line-through",
     }
 });
-
-const TodoStatus = ({ isComplete }) => {
-    const classes = useStyles();
-
-    if(isComplete === true){
-        return <CheckCircle className = { classes.isComplete }/>
-    } else {
-        return <CheckCircle color = "action"/>
-    }
-}
 
 const Todo = ( { todo, setTodo, todos } ) => {
 
@@ -57,7 +50,7 @@ const Todo = ( { todo, setTodo, todos } ) => {
         <>
             <div className = {classes.todoStyle}> 
                 <div>
-                    <Typography variant = "subtitle1">{ todo.name }</Typography>
+                    { todo.isComplete ? <Typography variant = "subtitle1" className = {classes.checked}>{ todo.name }</Typography> : <Typography variant = "subtitle1">{ todo.name }</Typography>}
                     <Typography variant = "body2" className = {classes.moreStyle}>Author</Typography>
                     <Typography variant = "body2" className = {classes.moreStyle}>Added: { moment(todo.date).fromNow() }</Typography>
                 </div>
@@ -66,7 +59,7 @@ const Todo = ( { todo, setTodo, todos } ) => {
                     <Button
                      onClick = {() => handleCheck(todo._id)}
                     >
-                        <TodoStatus isComplete = { todo.isComplete }/>
+                       { todo.isComplete ? <CheckCircle className = { classes.isComplete }/> : <CheckCircle color = "action"/>}
                     </Button>
                     <Button 
                     onClick = {() => handleOnUpdateClick(todo._id)}
@@ -77,9 +70,6 @@ const Todo = ( { todo, setTodo, todos } ) => {
                     onClick = {() => handleDelete(todo._id)}
                     > 
                         <Delete color="secondary"/>
-                    </Button>
-                    <Button>
-                        <ArrowDropDown />
                     </Button>
                 </ButtonGroup>
                 </div>
