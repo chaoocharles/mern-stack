@@ -10,7 +10,7 @@ export const getTodos = () => {
             })
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 }
@@ -25,7 +25,7 @@ export const addTodo = (newTodo) => {
             })
         })
         .catch((error) => {
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 }
@@ -40,7 +40,7 @@ export const updateTodo = (updatedTodo, id) => {
             })
         })
         .catch((error) => { 
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 }
@@ -55,7 +55,7 @@ export const deleteTodo = (id) => {
             })
         })
         .catch((error) => { 
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 }
@@ -70,7 +70,7 @@ export const checkTodo = (id) => {
             })
         })
         .catch((error) => { 
-            console.log(error)
+            console.log(error.response.data)
         })
     }
 }
