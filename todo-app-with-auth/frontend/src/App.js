@@ -2,12 +2,13 @@ import React from 'react';
 import './App.css';
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, AppBar, Typography } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Todos from './components/todos/Todos';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
+import NavBar from './components/navBar/NavBar';
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,9 +27,7 @@ function App() {
     <BrowserRouter>
       <ToastContainer />
       <Container maxWidth = "md">
-        <AppBar position = "static" color = "primary">
-          <Typography variant = "h3" align = "center">toDoApp;</Typography>
-        </AppBar>
+        <NavBar />
         <Container className={classes.contentStyle} maxWidth = "sm">
           <Switch>
             <Route path="/signin" component={SignIn} />

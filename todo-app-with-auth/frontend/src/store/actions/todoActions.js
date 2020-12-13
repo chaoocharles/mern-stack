@@ -1,4 +1,5 @@
 import instance from "../../api";
+import { toast } from "react-toastify";
 
 export const getTodos = () => {
     return(dispatch) => {
@@ -10,7 +11,10 @@ export const getTodos = () => {
             })
         })
         .catch((error) => {
-            console.log(error.response.data)
+            console.log(error);
+            toast.error(error.response?.data, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
         })
     }
 }
@@ -25,7 +29,10 @@ export const addTodo = (newTodo) => {
             })
         })
         .catch((error) => {
-            console.log(error.response.data)
+            console.log(error);
+            toast.error(error.response?.data, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
         })
     }
 }
@@ -40,7 +47,10 @@ export const updateTodo = (updatedTodo, id) => {
             })
         })
         .catch((error) => { 
-            console.log(error.response.data)
+            console.log(error);
+            toast.error(error.response?.data, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
         })
     }
 }
@@ -55,7 +65,10 @@ export const deleteTodo = (id) => {
             })
         })
         .catch((error) => { 
-            console.log(error.response.data)
+            console.log(error);
+            toast.error(error.response?.data, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
         })
     }
 }
@@ -70,7 +83,10 @@ export const checkTodo = (id) => {
             })
         })
         .catch((error) => { 
-            console.log(error.response.data)
+            console.log(error);
+            toast.error(error.response?.data, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+              });
         })
     }
 }
