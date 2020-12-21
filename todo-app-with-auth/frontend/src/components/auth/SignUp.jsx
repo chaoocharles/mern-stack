@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, TextField, Button } from "@material-ui/core";
 
-import { signup } from "../../store/actions/authActions";
+import { signUp } from "../../store/actions/authActions";
 
 const useStyles = makeStyles({
   formStyle: {
@@ -29,7 +29,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signup(user));
+    dispatch(signUp(user));
     setUser({ name: "", email: "", password: "" });
   };
 
@@ -62,7 +62,8 @@ const SignUp = () => {
         />
         <TextField
           className={classes.spacing}
-          id="enter-email"
+          id="enter-password"
+          type="password"
           label="enterPassword"
           variant="outlined"
           fullWidth
