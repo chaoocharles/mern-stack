@@ -29,7 +29,8 @@ export const addTodo = (newTodo) => {
             })
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response); 
+            
             toast.error(error.response?.data, {
                 position: toast.POSITION.BOTTOM_RIGHT,
               });

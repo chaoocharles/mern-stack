@@ -1,20 +1,17 @@
-const winston = require('winston');
-const auth = require('../middleware/auth');
-const { Todo } = require("../models/todo")
+const winston = require("winston");
+const auth = require("../middleware/auth");
+const { Todo } = require("../models/todo");
 const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", async(req, res, next) => {
-  try{
-    const todos = await Todo
-    .find()
-    .sort({ date: -1 })
-  
+router.get("/", async (req, res, next) => {
+  try {
+    const todos = await Todo.find().sort({ date: -1 });
+
     res.send(todos);
-  }
-  catch (error) {
-    res.status(500).send("Error: " + error.message)
+  } catch (error) {
+    res.status(500).send("Error: " + error.message);
 
     winston.error(error.message);
   }
@@ -30,15 +27,11 @@ router.post("/", auth, async (req, res) => {
 
   const { error } = schema.validate(req.body);
 
-  if (error)
-    return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
 
-  let todo = new Todo ({
-    name: req.body.name,
-    author: req.body.author,
-    isComplete: req.body.isComplete,
-    date: req.body.date
-  });
+  const { name, author, isComplete, date } = req.body;
+
+  let todo = new Todo({ name, author, isComplete, date });
 
   todo = await todo.save();
   res.send(todo);
@@ -52,19 +45,17 @@ router.put("/:id", auth, async (req, res) => {
     date: Joi.date(),
   });
 
-  const { error} = schema.validate(req.body);
+  const { error } = schema.validate(req.body);
 
-  if (error)
-    return res.status(400).send(result.error.details[0].message);
+  if (error) return res.status(400).send(result.error.details[0].message);
 
-  const todo = await Todo.findByIdAndUpdate(req.params.id, {
-    name: req.body.name,
-    author: req.body.author,
-    isComplete: req.body.isComplete,
-    date: req.body.date
-  }, {
-    new: true
-  });
+  const { name, author, isComplete, date } = req.body;
+
+  const todo = await Todo.findByIdAndUpdate(
+    req.params.id,
+    { name, author, isComplete, date },
+    { new: true }
+  );
 
   if (!todo) return res.status(404).send("Todo not found...");
 
@@ -76,17 +67,21 @@ router.patch("/:id", auth, async (req, res) => {
 
   if (!todo) return res.status(404).send("Todo not found...");
 
-  const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, {
-    isComplete: !todo.isComplete,
-  }, {
-    new: true
-  });
+  const updatedTodo = await Todo.findByIdAndUpdate(
+    req.params.id,
+    {
+      isComplete: !todo.isComplete,
+    },
+    {
+      new: true,
+    }
+  );
 
   res.send(updatedTodo);
 });
 
-router.delete("/:id", auth, async(req, res) => {
-  const todo = await Todo.findByIdAndDelete(req.params.id)
+router.delete("/:id", auth, async (req, res) => {
+  const todo = await Todo.findByIdAndDelete(req.params.id);
   if (!todo) return res.status(404).send("Todo not found...");
 
   res.send(todo);
