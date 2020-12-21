@@ -36,12 +36,15 @@ const AddTodo = ({ todo, setTodo }) => {
                 isComplete: todo.isComplete,    
                 date: todo.date
             }
+            
             dispatch(updateTodo(updatedTodo, id));
+
         } else{
             const newTodo = {
                 ...todo,
                 date: new Date()
             }
+
             dispatch(addTodo(newTodo));
         }
         setTodo({ name: '', isComplete: false});

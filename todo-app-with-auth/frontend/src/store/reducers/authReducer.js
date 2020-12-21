@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
@@ -21,6 +23,9 @@ const authReducer = (state = initialState, action) => {
             }
         case "SIGN_IN":
         case "SIGN_UP":
+            toast.success("Success...", {
+                position: toast.POSITION.BOTTOM_RIGHT,
+            });
             return {
                 ...state,
                 ...action,

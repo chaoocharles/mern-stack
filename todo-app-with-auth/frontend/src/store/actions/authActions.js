@@ -1,16 +1,18 @@
 import instance from "../../api";
+import { toast } from "react-toastify";
 
-export const getTodos = () => {
+export const signup = (user) => {
     return(dispatch) => {
-        instance.get('/todos')
-        .then((todos) => {
+        instance.post('/signup', user)
+        .then((user) => {
             dispatch({
-                type: "GET_TODOS",
-                todos
+                type: "SIGN_UP",
+                user
             })
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response); 
+            
             toast.error(error.response?.data, {
                 position: toast.POSITION.BOTTOM_RIGHT,
               });
