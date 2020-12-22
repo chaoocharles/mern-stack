@@ -19,8 +19,6 @@ const useStyles = makeStyles({
 });
 
 const ListTodos = ({ todo, setTodo }) => {
-  const state = useSelector((state) => state);
-  console.log(state);
   const todos = useSelector((state) => state.todos);
   const classes = useStyles();
   const dispatch = useDispatch();

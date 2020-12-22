@@ -45,6 +45,14 @@ export const signIn = (email, password) => {
   };
 };
 
+export const signOut = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "SIGN_OUT",
+    });
+  };
+};
+
 export const loadUser = () => {
   return (dispatch, getState) => {
     const token = getState().auth.token;
@@ -53,7 +61,6 @@ export const loadUser = () => {
         type: "USER_LOADED",
         token,
       });
-
     } else return null;
   };
 };
