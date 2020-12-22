@@ -5,10 +5,12 @@ export const signUp = (user) => {
   return (dispatch) => {
     instance
       .post("/signup", user)
-      .then((user) => {
+      .then((token) => {
+        localStorage.setItem("token", token.data);
+
         dispatch({
           type: "SIGN_UP",
-          user,
+          token: token.data,
         });
       })
       .catch((error) => {
@@ -26,10 +28,11 @@ export const signIn = (email, password) => {
     instance
       .post("/signin", { email, password })
       .then((token) => {
-          console.log("hello", token)
+        localStorage.setItem("token", token.data);
+
         dispatch({
           type: "SIGN_IN",
-          token,
+          token: token.data,
         });
       })
       .catch((error) => {
@@ -39,5 +42,18 @@ export const signIn = (email, password) => {
           position: toast.POSITION.BOTTOM_RIGHT,
         });
       });
+  };
+};
+
+export const loadUser = () => {
+  return (dispatch, getState) => {
+    const token = getState().auth.token;
+    if (token) {
+      dispatch({
+        type: "USER_LOADED",
+        token,
+      });
+
+    } else return null;
   };
 };

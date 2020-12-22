@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SignUp = () => {
+const SignUp = (props) => { 
   const classes = useStyles();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -31,6 +31,7 @@ const SignUp = () => {
     e.preventDefault();
     dispatch(signUp(user));
     setUser({ name: "", email: "", password: "" });
+    props.history.push("/");
   };
 
   return (

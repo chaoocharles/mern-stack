@@ -1,48 +1,41 @@
 import { toast } from "react-toastify";
+import jwtDecode from "jwt-decode";
 
 const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: null,
-    isLoading: false,
-    user: null
-}
+  token: localStorage.getItem("token"),
+  name: null,
+  email: null,
+  _id: null,
+};
 
 const authReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case "USER_LOADING":
-            return{
-                ...state,
-                isLoading: true
-            }
-        case "USER_LOADED":
-            return {
-                ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.user
-            }
-        case "SIGN_IN":
-        case "SIGN_UP":
-            toast.success("Success...", {
-                position: toast.POSITION.BOTTOM_RIGHT,
-            });
-            return {
-                ...state,
-                ...action,
-                isAuthenticated: true,
-                isLoading: false,
-            }
-        case "SIGN_OUT":
-            localStorage.removeItem('token')
-            return {
-                token: null,
-                user: null,
-                isAuthenticated: false,
-                isLoading: false
-            }
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case "SIGN_IN":
+    case "SIGN_UP":
+    case "USER_LOADED":
+      toast.success("Welcome...", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      const user = jwtDecode(action.token);
+      console.log("user", user);
+      return {
+        ...initialState,
+        token: action.token,
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+      };
+    case "SIGN_OUT":
+      localStorage.removeItem("token");
+      return {
+        token: null,
+        name: null,
+        email: null,
+        _id: null,
+      };
+    default:
+      return state;
+  }
+};
 
 export default authReducer;

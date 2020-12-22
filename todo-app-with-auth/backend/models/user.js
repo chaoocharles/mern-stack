@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = function () {
   const jwtPrivateKey = process.env.TODO_APP_JWT_PRIVATE_KEY;
-  const token = jwt.sign({ _id: this._id }, jwtPrivateKey);
+  const token = jwt.sign({ _id: this._id, name: this.name, email: this.email }, jwtPrivateKey);
   return token;
 };
 
