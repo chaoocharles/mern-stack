@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
 const Joi = require("joi");
 const express = require("express");
@@ -27,7 +28,9 @@ router.post("/", async (req, res) => {
 
   await user.save();
 
-  const token = user.generateAuthToken();
+  const jwtSecretKey = process.env.TODO_APP_JWT_SECRET_KEY;
+  const token = jwt.sign({ _id: user._id, name: user.name, email: user.email }, jwtSecretKey)
+
   res.send(token);
 });
 

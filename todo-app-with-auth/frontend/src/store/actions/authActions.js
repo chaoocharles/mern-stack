@@ -1,10 +1,12 @@
-import instance from "../../api";
+import axios from "axios";
+import { url } from "../../api"
 import { toast } from "react-toastify";
 
 export const signUp = (user) => {
+
   return (dispatch) => {
-    instance
-      .post("/signup", user)
+    axios
+      .post(`${url}/signup`, user)
       .then((token) => {
         localStorage.setItem("token", token.data);
 
@@ -25,8 +27,8 @@ export const signUp = (user) => {
 
 export const signIn = (email, password) => {
   return (dispatch) => {
-    instance
-      .post("/signin", { email, password })
+    axios
+      .post(`${url}/signin`, { email, password })
       .then((token) => {
         localStorage.setItem("token", token.data);
 
