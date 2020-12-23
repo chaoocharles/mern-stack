@@ -51,7 +51,7 @@ const Todo = ( { todo, setTodo, todos } ) => {
             <div className = {classes.todoStyle}> 
                 <div>
                     { todo.isComplete ? <Typography variant = "subtitle1" className = {classes.checked}>{ todo.name }</Typography> : <Typography variant = "subtitle1">{ todo.name }</Typography>}
-                    <Typography variant = "body2" className = {classes.moreStyle}>Author</Typography>
+                    <Typography variant = "body2" className = {classes.moreStyle}>Author: { todo.author }</Typography>
                     <Typography variant = "body2" className = {classes.moreStyle}>Added: { moment(todo.date).fromNow() }</Typography>
                 </div>
                 <div>

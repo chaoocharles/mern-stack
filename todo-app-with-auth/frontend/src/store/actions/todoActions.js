@@ -22,9 +22,10 @@ export const getTodos = () => {
 };
 
 export const addTodo = (newTodo) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const author = getState().auth.name;
     axios
-      .post(`${url}/todos`, newTodo, setHeaders())
+      .post(`${url}/todos`, { ...newTodo, author: author }, setHeaders())
       .then((todo) => {
         dispatch({
           type: "ADD_TODO",
