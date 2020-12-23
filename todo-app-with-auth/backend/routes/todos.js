@@ -21,6 +21,7 @@ router.post("/", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(200).required(),
     author: Joi.string().min(3),
+    uid: Joi.string(),
     isComplete: Joi.boolean(),
     date: Joi.date(),
   });
@@ -29,9 +30,9 @@ router.post("/", auth, async (req, res) => {
 
   if (error) return res.status(400).send(error.details[0].message);
 
-  const { name, author, isComplete, date } = req.body;
+  const { name, author, isComplete, date, uid } = req.body;
 
-  let todo = new Todo({ name, author, isComplete, date });
+  let todo = new Todo({ name, author, isComplete, date, uid });
 
   todo = await todo.save();
   res.send(todo);
@@ -41,6 +42,7 @@ router.put("/:id", auth, async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
     author: Joi.string().min(3),
+    uid: Joi.string(),
     isComplete: Joi.boolean(),
     date: Joi.date(),
   });
@@ -49,23 +51,30 @@ router.put("/:id", auth, async (req, res) => {
 
   if (error) return res.status(400).send(result.error.details[0].message);
 
-  const { name, author, isComplete, date } = req.body;
-
-  const todo = await Todo.findByIdAndUpdate(
-    req.params.id,
-    { name, author, isComplete, date },
-    { new: true }
-  );
+  const todo = await Todo.findById(req.params.id);
 
   if (!todo) return res.status(404).send("Todo not found...");
 
-  res.send(todo);
+  if (todo.uid !== req.user._id) return res.status(401).send("Todo update failed. Not authorized...");
+
+    const { name, author, isComplete, date, uid } = req.body;
+  
+    const updatedTodo = await Todo.findByIdAndUpdate(
+      req.params.id,
+      { name, author, isComplete, date, uid },
+      { new: true }
+    );
+  
+    res.send(updatedTodo);
+
 });
 
 router.patch("/:id", auth, async (req, res) => {
   const todo = await Todo.findById(req.params.id);
 
   if (!todo) return res.status(404).send("Todo not found...");
+
+  if (todo.uid !== req.user._id) return res.status(401).send("Todo check/uncheck failed. Not authorized...");
 
   const updatedTodo = await Todo.findByIdAndUpdate(
     req.params.id,
@@ -81,10 +90,15 @@ router.patch("/:id", auth, async (req, res) => {
 });
 
 router.delete("/:id", auth, async (req, res) => {
-  const todo = await Todo.findByIdAndDelete(req.params.id);
+  const todo = await Todo.findById(req.params.id);
+
   if (!todo) return res.status(404).send("Todo not found...");
 
-  res.send(todo);
+  if (todo.uid !== req.user._id) return res.status(401).send("Todo deletion failed. Not authorized...");
+
+  const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+
+  res.send(deletedTodo);
 });
 
 module.exports = router;

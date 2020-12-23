@@ -29,12 +29,13 @@ const AddTodo = ({ todo, setTodo }) => {
         e.preventDefault();
 
         if(todo._id){
-            console.log(todo, "updating todo...")
             const id = todo._id;
             const updatedTodo = {
                 name: todo.name,
                 isComplete: todo.isComplete,    
-                date: todo.date
+                date: todo.date,
+                author: todo.author,
+                uid: todo.uid
             }
             
             dispatch(updateTodo(updatedTodo, id));
