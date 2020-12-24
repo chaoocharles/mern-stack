@@ -58,6 +58,7 @@ const AddTodo = ({ todo, setTodo }) => {
                     id="enter-todo"
                     label="enterToDo"
                     variant="outlined"
+                    autoFocus
                     fullWidth
                     value = {todo.name}
                     onChange = {(e) => setTodo({...todo, name: e.target.value})}

@@ -55,18 +55,18 @@ router.put("/:id", auth, async (req, res) => {
 
   if (!todo) return res.status(404).send("Todo not found...");
 
-  if (todo.uid !== req.user._id) return res.status(401).send("Todo update failed. Not authorized...");
+  if (todo.uid !== req.user._id)
+    return res.status(401).send("Todo update failed. Not authorized...");
 
-    const { name, author, isComplete, date, uid } = req.body;
-  
-    const updatedTodo = await Todo.findByIdAndUpdate(
-      req.params.id,
-      { name, author, isComplete, date, uid },
-      { new: true }
-    );
-  
-    res.send(updatedTodo);
+  const { name, author, isComplete, date, uid } = req.body;
 
+  const updatedTodo = await Todo.findByIdAndUpdate(
+    req.params.id,
+    { name, author, isComplete, date, uid },
+    { new: true }
+  );
+
+  res.send(updatedTodo);
 });
 
 router.patch("/:id", auth, async (req, res) => {
@@ -74,7 +74,8 @@ router.patch("/:id", auth, async (req, res) => {
 
   if (!todo) return res.status(404).send("Todo not found...");
 
-  if (todo.uid !== req.user._id) return res.status(401).send("Todo check/uncheck failed. Not authorized...");
+  if (todo.uid !== req.user._id)
+    return res.status(401).send("Todo check/uncheck failed. Not authorized...");
 
   const updatedTodo = await Todo.findByIdAndUpdate(
     req.params.id,
@@ -94,7 +95,8 @@ router.delete("/:id", auth, async (req, res) => {
 
   if (!todo) return res.status(404).send("Todo not found...");
 
-  if (todo.uid !== req.user._id) return res.status(401).send("Todo deletion failed. Not authorized...");
+  if (todo.uid !== req.user._id)
+    return res.status(401).send("Todo deletion failed. Not authorized...");
 
   const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
 

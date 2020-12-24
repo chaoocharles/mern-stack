@@ -57,7 +57,7 @@ const NavBar = () => {
                   className={classes.authButton}
                   onClick = {() => handleSignOut()}
                 >
-                  <Link className={classes.linkStyle} to="/signin">
+                  <Link className={classes.linkStyle} to="/">
                     SignOut
                   </Link>
                 </Button>
