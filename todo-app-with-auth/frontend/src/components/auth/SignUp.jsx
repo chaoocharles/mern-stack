@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, TextField, Button } from "@material-ui/core";
@@ -18,8 +19,9 @@ const useStyles = makeStyles({
   },
 });
 
-const SignUp = (props) => { 
+const SignUp = (props) => {
   const classes = useStyles();
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     name: "",
@@ -33,6 +35,8 @@ const SignUp = (props) => {
     setUser({ name: "", email: "", password: "" });
     props.history.push("/");
   };
+
+  if (auth._id) return <Redirect to="/" />;
 
   return (
     <>

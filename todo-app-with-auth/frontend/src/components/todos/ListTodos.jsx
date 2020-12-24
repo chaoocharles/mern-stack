@@ -5,8 +5,7 @@ import Todo from "./Todo";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTodos } from "../../store/actions/todoActions";
 
 const useStyles = makeStyles({

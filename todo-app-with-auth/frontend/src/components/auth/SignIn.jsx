@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, TextField, Button } from "@material-ui/core";
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 
 const SignIn = (props) => {
   const classes = useStyles();
+  const auth= useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [creds, setCreds] = useState({
     email: "",
@@ -33,6 +35,7 @@ const SignIn = (props) => {
     props.history.push("/");
   };
 
+  if (auth._id) return <Redirect to="/" />;
   return (
     <>
       <form

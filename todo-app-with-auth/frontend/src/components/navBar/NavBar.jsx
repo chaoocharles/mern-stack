@@ -4,8 +4,7 @@ import { AppBar, Typography, Toolbar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 import { signOut } from '../../store/actions/authActions';
 

@@ -5,7 +5,7 @@ import ListTodos from "./ListTodos";
 import { useSelector } from "react-redux";
 
 const Todos = () => {
-  const user = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
   const [todo, setTodo] = useState({
     name: "",
     isComplete: false,
@@ -13,7 +13,7 @@ const Todos = () => {
 
   return (
     <>
-      {user._id ? (
+      {auth._id ? (
         <>
           <AddTodo todo={todo} setTodo={setTodo} />
           <ListTodos todo={todo} setTodo={setTodo} />

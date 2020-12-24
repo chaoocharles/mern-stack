@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 const Todo = ({ todo, setTodo, todos }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
 
   const handleOnUpdateClick = (id) => {
     const foundTodo = todos.find((todo) => todo._id === id);
@@ -72,7 +72,7 @@ const Todo = ({ todo, setTodo, todos }) => {
           </Typography>
         </div>
         <div>
-          {user._id && (user._id === todo.uid) ? (
+          {auth._id && (auth._id === todo.uid) ? (
             <ButtonGroup
               size="small"
               aria-label="outlined primary button group"
