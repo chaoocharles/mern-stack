@@ -28,6 +28,10 @@ app.use("/api/todos", todos);
 app.use("/api/signup", signUp);
 app.use("/api/signin", signIn);
 
+app.get("/", (req, res) => {
+  res.send("welcome to the todos api...");
+});
+
 const uri = process.env.ATLAS_URI;
 const port = process.env.PORT || 5000;
 
