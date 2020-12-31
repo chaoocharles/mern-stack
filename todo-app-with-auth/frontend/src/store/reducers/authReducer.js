@@ -16,7 +16,7 @@ const authReducer = (state = initialState, action) => {
       toast.success("Welcome...", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-      const user = jwtDecode(action.token);
+      const user = jwtDecode(action.token); 
       return {
         ...initialState,
         token: action.token,
