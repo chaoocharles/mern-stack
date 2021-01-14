@@ -5,11 +5,11 @@ const Joi = require("joi");
 const express = require("express");
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", auth, async (req, res, next) => {
   try {
     const todos = await Todo.find().sort({ date: -1 });
-
-    res.send(todos);
+    const filteredTodos = todos.filter(todo => todo.uid === req.user._id);
+    res.send(filteredTodos);
   } catch (error) {
     res.status(500).send("Error: " + error.message);
 

@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SignIn = (props) => {
+const SignIn = () => {
   const classes = useStyles();
   const auth= useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -32,10 +32,10 @@ const SignIn = (props) => {
     e.preventDefault();
     dispatch(signIn(creds.email, creds.password));
     setCreds({ email: "", password: "" });
-    props.history.push("/");
   };
 
   if (auth._id) return <Redirect to="/" />;
+
   return (
     <>
       <form

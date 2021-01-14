@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action) => {
     case "SIGN_IN":
     case "SIGN_UP":
     case "USER_LOADED":
-      toast.success("Welcome...", {
+      toast("Welcome...", {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
       const user = jwtDecode(action.token); 
@@ -26,6 +26,9 @@ const authReducer = (state = initialState, action) => {
       };
     case "SIGN_OUT":
       localStorage.removeItem("token");
+      toast("Goodbye...", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return {
         token: null,
         name: null,

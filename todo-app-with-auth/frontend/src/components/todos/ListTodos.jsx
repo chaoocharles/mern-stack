@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Todo from "./Todo";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
-import { useDispatch, useSelector } from "react-redux";
 import { getTodos } from "../../store/actions/todoActions";
 
 const useStyles = makeStyles({
@@ -18,6 +19,7 @@ const useStyles = makeStyles({
 });
 
 const ListTodos = ({ todo, setTodo }) => {
+  const auth= useSelector((state) => state.auth);
   const todos = useSelector((state) => state.todos);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -26,12 +28,14 @@ const ListTodos = ({ todo, setTodo }) => {
     dispatch(getTodos());
   }, [todo._id, dispatch]);
 
+  if (!auth._id) return <Redirect to="/signin" />;
+
   return (
     <>
       <div className={classes.todosStyle}>
         <Typography variant="h5">
           {" "}
-          {todos.length > 0 ? "theTodos;" : "noTodosYet; Loading..."}{" "}
+          {todos.length > 0 ? "theTodos;" : "noTodosYet;"}{" "}
         </Typography>
         {todos &&
           todos.map((todo) => {

@@ -2,11 +2,11 @@ import React from "react";
 
 import { AppBar, Typography, Toolbar, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { signOut } from '../../store/actions/authActions';
+import { signOut } from "../../store/actions/authActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,14 +26,16 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
   const classes = useStyles();
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   console.log(state);
   const user = useSelector((state) => state.auth);
 
   const handleSignOut = () => {
-    dispatch(signOut())
-}
+    dispatch(signOut());
+    history.push("/signin");
+  };
 
   return (
     <>
@@ -54,7 +56,7 @@ const NavBar = () => {
                   edge="end"
                   color="inherit"
                   className={classes.authButton}
-                  onClick = {() => handleSignOut()}
+                  onClick={() => handleSignOut()}
                 >
                   <Link className={classes.linkStyle} to="/">
                     SignOut

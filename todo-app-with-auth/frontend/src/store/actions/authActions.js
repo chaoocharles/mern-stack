@@ -1,9 +1,8 @@
 import axios from "axios";
-import { url } from "../../api"
+import { url } from "../../api";
 import { toast } from "react-toastify";
 
 export const signUp = (user) => {
-
   return (dispatch) => {
     axios
       .post(`${url}/signup`, user)
@@ -50,8 +49,13 @@ export const signIn = (email, password) => {
 export const signOut = () => {
   return (dispatch) => {
     dispatch({
+      type: "CLEAR_TODOS",
+    });
+    
+    dispatch({
       type: "SIGN_OUT",
     });
+
   };
 };
 

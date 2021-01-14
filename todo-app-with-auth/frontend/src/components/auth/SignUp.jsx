@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-const SignUp = (props) => {
+const SignUp = () => {
   const classes = useStyles();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -33,7 +33,6 @@ const SignUp = (props) => {
     e.preventDefault();
     dispatch(signUp(user));
     setUser({ name: "", email: "", password: "" });
-    props.history.push("/");
   };
 
   if (auth._id) return <Redirect to="/" />;

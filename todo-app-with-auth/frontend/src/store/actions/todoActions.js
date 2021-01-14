@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 export const getTodos = () => {
   return (dispatch) => {
     axios
-      .get(`${url}/todos`)
+      .get(`${url}/todos`, setHeaders())
       .then((todos) => {
         dispatch({
           type: "GET_TODOS",
@@ -14,9 +14,6 @@ export const getTodos = () => {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(error.response?.data, {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
       });
   };
 };
